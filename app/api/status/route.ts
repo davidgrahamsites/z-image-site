@@ -15,5 +15,11 @@ export async function GET(req: Request) {
   });
 
   const data = await r.json().catch(() => ({}));
-  return NextResponse.json({ ok: r.ok, status: (data as any)?.status ?? null, raw: data }, { status: r.ok ? 200 : 502 });
+  const status = (data as any)?.status ?? null;
+  const output = (data as any)?.output ?? null;
+
+  return NextResponse.json(
+    { ok: r.ok, status, output },
+    { status: r.ok ? 200 : 502 }
+  );
 }
